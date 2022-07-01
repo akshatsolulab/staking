@@ -101,17 +101,6 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
             userList.remove(msg.sender);
         }
     }
-    function myTokenApr() internal {
-        AprRate[0] = 500;
-        AprRate[1] = 1000;
-        AprRate[2] = 1500;
-    }
-
-    function PerkTokenApr() internal {
-        bonusAprRate[0] = 200;
-        bonusAprRate[1] = 500;
-        bonusAprRate[2] = 1000;
-    }
 
     //withdraw reward tokens earned and for updating user profile
     function claimMyToken() external {
