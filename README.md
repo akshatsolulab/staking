@@ -77,7 +77,6 @@ Deploying the Contract on a proxy address
 
 
 ### Transaction Hashes
-Contract is deployed on 0xc12dc9161bC03A67BF7cB6f52D928EfA2daDfb08
 PerkToken is deployed on 0x0768e5267195a8887abc316d7f3d4825e0813434
 https://rinkeby.etherscan.io/token/0x0768e5267195a8887abc316d7f3d4825e0813434
 
