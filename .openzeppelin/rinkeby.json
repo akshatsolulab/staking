@@ -2,15 +2,50 @@
   "manifestVersion": "3.2",
   "proxies": [
     {
-      "address": "0x89E7727e6195983F72E5a82d95f1F921A379E3e5",
-      "txHash": "0x0563f9332806b3a8322ad76d6e521fc7f6de2745aa4255edfd92e70ad8ae3d29",
+      "address": "0xc982aeEA0b8D676Ff8A65CC053Dd65ac04F1001a",
+      "txHash": "0xb51c758e2dad1a9bd7fc9fcaf7a3d30123dee98d5abd480bea031d6f6d672d46",
+      "kind": "uups"
+    },
+    {
+      "address": "0xCaa3a6b56dafb50e18A872E7E6e62de3B38c3821",
+      "txHash": "0xa4a2c2cdfa33f9478c593fea5182e6640d72f5b60872ab5ba192d26b64399ce4",
+      "kind": "uups"
+    },
+    {
+      "address": "0xF70A45A5d010F57bA027F1bF440F1B3f21eBf66c",
+      "txHash": "0x302b87a221c12b2aeb866b6d6a8cd789ff1c60d52cc08ee93f8a56664d1ab363",
+      "kind": "uups"
+    },
+    {
+      "address": "0x4b79f6d6D6565cF5F30373ADEB39a3ddF956cf1C",
+      "txHash": "0xde48a4695b0b117a08df1fe147e22493a08ef55a65deb20efd14d2fc3c29ab12",
+      "kind": "uups"
+    },
+    {
+      "address": "0x3DB0a41cE2A59887189e562B102897786df282d6",
+      "txHash": "0xb957d291841c86c5fb100ccbb219cf37e17ffe4d02130eb0eaa96ab4456e5878",
+      "kind": "uups"
+    },
+    {
+      "address": "0x9066e88430Cc850C60f94eA3096A6835a2Da6C57",
+      "txHash": "0x069731b12322b1f0ceea93fc2e025665c5f788aac968fee13e37012b59159dc6",
+      "kind": "uups"
+    },
+    {
+      "address": "0x890bcDFd8d7B96476Fc0EeB270729A63a316E707",
+      "txHash": "0x4d06cbc4fccc05824053a986282e14e966aaff7847d5c8e7cd396a8e3a2bd373",
+      "kind": "uups"
+    },
+    {
+      "address": "0xb739192A771f92198503398Ec9363e424FCD5cBb",
+      "txHash": "0x12e238ff9ff1660dd111fea810aed2b3c21d83d28d4a282544dea5196cf64b36",
       "kind": "uups"
     }
   ],
   "impls": {
     "b0dfdf62ca262cde076a41a9ec1d7b13e12823b622755d2037166f0baa0f712d": {
-      "address": "0x0F42C14a2E60F7EE66d091D2f18C0da2297cb205",
-      "txHash": "0xfbb47d2eed11781ff58b487a1d63d16bf967ca377d174c3e9a60e63f4aac784f",
+      "address": "0xDf181bdF45484Fa3F9a748fc32432F2Ce4c51Ac2",
+      "txHash": "0x84754c45283ef1ec9a4c8f5dd82d94d2cdb59e71ab4af00d83cf923735bff679",
       "layout": {
         "storage": [
           {
