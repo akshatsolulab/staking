@@ -68,6 +68,10 @@ Initialising the contract as upgradeable
 Showcasing the Upgrade function
 <img width="1440" alt="Screenshot 2022-06-29 at 6 47 13 PM" src="https://user-images.githubusercontent.com/86094155/176445735-0d87b247-9014-4f7f-b6e0-3abefeeb7dff.png">
 
+Deploying the Contract on a proxy address
+<img width="1440" alt="Screenshot 2022-07-01 at 6 06 56 AM" src="https://user-images.githubusercontent.com/86094155/176800241-038bb4dd-e47b-4040-8d74-6dfbaf179b70.png">
+
+
 
 
 
