@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-/// @notice imports
+//all the imports for upgradeable contract
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
@@ -18,12 +18,11 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     using SafeMath for uint256;
     using EnumerableSet for EnumerableSet.AddressSet;
     //defining the end of the staking period
-    uint public stakingEndTimestamp;
-
+    uint public stakingPeriod;
     // Total amount of tokens in stkaing contract
     uint public totalStakedInPool;
     //defining the total staked in the staking pool
-    EnumerableSet.AddressSet private stakeHoldersList;
+    EnumerableSet.AddressSet private userList;
     /// defining upgradeable Perks Contract
     IERC20Upgradeable public perkToken;
     //defining upgradeable MyToken contract
@@ -33,16 +32,16 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     //Storing the UserInfo and it's attributes
     struct UserInfo {
         uint amountStaked;
-        uint depositDuration;
-        uint rewardEarned;
-        uint lastRewardWithdrawl;
+        uint stakingDuration;
+        uint bonusTokens;
+        uint bonusUnstake;
     }
     // storage of user information struct
     mapping(address => UserInfo) public userInfo;
     // storage of user information struct
-    mapping(uint => uint) public rewardRates;
+    mapping(uint => uint) public AprRate;
     // storage of user information struct
-    mapping(uint => uint) public bonusRewardRates;
+    mapping(uint => uint) public bonusAprRate;
 
 
     //initialising the contract and it's functiom
@@ -50,16 +49,16 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         IERC20Upgradeable perkCont,
         IERC20Upgradeable myTokenCont,
         AggregatorV3Interface _chainlinkAggregatorAddress,
-        uint _stakingEndTimestamp
+        uint _stakingPeriod
     ) external initializer {
         perkToken = perkCont;
         myToken = myTokenCont;
         chainlinkAggregatorAddress = _chainlinkAggregatorAddress;
-        stakingEndTimestamp = _stakingEndTimestamp;
+        stakingPeriod = _stakingPeriod;
         __Ownable_init();
         __UUPSUpgradeable_init();
-        _setRewardRates();
-        _setBonusRewardRates();
+         myTokenApr();
+        PerkTokenApr();
     }
 
 // To authorize the owner to upgrade the contract 
@@ -70,18 +69,18 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         UserInfo storage user = userInfo[msg.sender];
         require(_amount > 0, "depositStableCoin:: amount should be greater than zero");
 
-        user.depositDuration = block.timestamp;
+        user.stakingDuration = block.timestamp;
 
         IERC20Upgradeable(myToken).transferFrom(msg.sender, address(this), _amount);
 
-        _updateUserInfo();
+        updateUser();
         
         user.amountStaked = user.amountStaked.add(_amount);
 
         totalStakedInPool = totalStakedInPool.add(_amount);
 
-        if(!stakeHoldersList.contains(msg.sender)) {
-            stakeHoldersList.add(msg.sender);
+        if(!userList.contains(msg.sender)) {
+            userList.add(msg.sender);
         }
     }
 
@@ -90,7 +89,7 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         UserInfo storage user = userInfo[msg.sender];
         require(_amount <= user.amountStaked, "unstake:: can not withdraw more than your staked amount");
 
-        _updateUserInfo();
+        updateUser();
 
         IERC20Upgradeable(myToken).transfer(msg.sender, _amount);
 
@@ -98,42 +97,42 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
         totalStakedInPool = totalStakedInPool.sub(_amount);
 
-        if(stakeHoldersList.contains(msg.sender)) {
-            stakeHoldersList.remove(msg.sender);
+        if(userList.contains(msg.sender)) {
+            userList.remove(msg.sender);
         }
     }
-    function _setRewardRates() internal {
-        rewardRates[0] = 500;
-        rewardRates[1] = 1000;
-        rewardRates[2] = 1500;
+    function myTokenApr() internal {
+        AprRate[0] = 500;
+        AprRate[1] = 1000;
+        AprRate[2] = 1500;
     }
 
-    function _setBonusRewardRates() internal {
-        bonusRewardRates[0] = 200;
-        bonusRewardRates[1] = 500;
-        bonusRewardRates[2] = 1000;
+    function PerkTokenApr() internal {
+        bonusAprRate[0] = 200;
+        bonusAprRate[1] = 500;
+        bonusAprRate[2] = 1000;
     }
 
     //withdraw reward tokens earned and for updating user profile
-    function claimERC20RewardTokens() external {
-        _updateUserInfo();
+    function claimMyToken() external {
+        updateUser();
     }
 
     //fetch total rewards earned by user and address of whom you want to check rewards for
-    function getPendingReward(address _userAddress) external view returns(uint) {
-        uint pendingAmount = _getPendingRewardAmount(_userAddress);
+    function remainingRewardAmount(address _userAddress) external view returns(uint) {
+        uint pendingAmount = remainingReward(_userAddress);
         return pendingAmount; 
     }
 
     //update user information and transfer pending reward tokens
-    function _updateUserInfo() internal {
+    function updateUser() internal {
         UserInfo storage user = userInfo[msg.sender];
-        uint pendingReward = _getPendingRewardAmount(msg.sender);
+        uint pendingReward = remainingReward(msg.sender);
         if (pendingReward > 0) {
             IERC20Upgradeable(perkToken).transfer(msg.sender, pendingReward);
-            user.rewardEarned = user.rewardEarned.add(pendingReward);
+            user.bonusTokens = user.bonusTokens.add(pendingReward);
         }
-        user.lastRewardWithdrawl = block.timestamp;
+        user.bonusUnstake = block.timestamp;
     }
     // fetch current price of stable-PerkToken/USD and convert mytokens into usd price
     function ConvertIntoCurrency() internal view returns(int) {
@@ -141,9 +140,9 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         return currentUSDPrice;
     }
     //get pending rewards generated by user and to know the pending amount
-    function _getPendingRewardAmount(address _userAddress) internal view returns(uint) {
+    function remainingReward(address _userAddress) internal view returns(uint) {
         UserInfo storage user = userInfo[msg.sender];
-        if(!stakeHoldersList.contains(_userAddress)) {
+        if(!userList.contains(_userAddress)) {
             return 0;
         }
 
@@ -151,35 +150,35 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
             return 0;
         }
 
-        uint stakedTimeDifference = block.timestamp.sub(userInfo[msg.sender].lastRewardWithdrawl);
+        uint stakedTimeDifference = block.timestamp.sub(userInfo[msg.sender].bonusUnstake);
         uint stakedAmountByUser = user.amountStaked;
         uint stakedAmountInUSD = stakedAmountByUser.mul(uint256(ConvertIntoCurrency())).div(1e8);
 
         uint _rewardRate;
 
-       if(block.timestamp <= user.depositDuration.add(30 minutes)) {
-            _rewardRate = rewardRates[0];
+       if(block.timestamp <= user.stakingDuration.add(30 minutes)) {
+            _rewardRate = AprRate[0];
         }
-        else if(block.timestamp > user.depositDuration.add(30 minutes) && block.timestamp <= user.depositDuration.add(180 minutes)) {
-            _rewardRate = rewardRates[1];
+        else if(block.timestamp > user.stakingDuration.add(30 minutes) && block.timestamp <= user.stakingDuration.add(180 minutes)) {
+            _rewardRate = AprRate[1];
         }
         else {
-            _rewardRate = rewardRates[2];
+            _rewardRate = AprRate[2];
         }
 
         if(stakedAmountInUSD >= 100) {
-            _rewardRate = _rewardRate.add(bonusRewardRates[0]);
+            _rewardRate = _rewardRate.add(bonusAprRate[0]);
         }        
         else if(stakedAmountInUSD >= 500) {
-            _rewardRate = _rewardRate.add(bonusRewardRates[1]);
+            _rewardRate = _rewardRate.add(bonusAprRate[1]);
         }
         else if(stakedAmountInUSD >= 1000) {
-            _rewardRate = _rewardRate.add(bonusRewardRates[2]);
+            _rewardRate = _rewardRate.add(bonusAprRate[2]);
         }
 
-        uint totalPendingReward = stakedAmountByUser.mul(_rewardRate).mul(stakedTimeDifference).div(stakingEndTimestamp).div(1e4);
+        uint totalPendingReward = stakedAmountByUser.mul(_rewardRate).mul(stakedTimeDifference).div(stakingPeriod).div(1e4);
         return totalPendingReward;
     }
 
-    
+
 }

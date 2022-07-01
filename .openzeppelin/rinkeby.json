@@ -2,25 +2,15 @@
   "manifestVersion": "3.2",
   "proxies": [
     {
-      "address": "0xfc5c705018072C34bFE4B7b687edd44534104DbD",
-      "txHash": "0x9ae32d61b3f7a31b786bae1b0edd5b90c9de3c1f1c3c5352bcf339cd0311dfaf",
-      "kind": "uups"
-    },
-    {
-      "address": "0xf657dad20D178F486cd32F025610081461527DC6",
-      "txHash": "0x80eb3adbf25c092b2acf2eb25e6d193372541a0cd56804420ce594a12fa08944",
-      "kind": "uups"
-    },
-    {
-      "address": "0x9E1C17b678a050F5d3BE06123BE641D160749fBf",
-      "txHash": "0xac93c7054770d3ed044cd1ea32b463357a96d6c4920f66febb33a7fa26343852",
+      "address": "0xf428Bfa1d83143641C534A7203480178F0124E96",
+      "txHash": "0x3b00273cb86c2f3192d1647a7725d040c3bc9f18752126e8894f9373547f23c8",
       "kind": "uups"
     }
   ],
   "impls": {
-    "7006ad4681056dda50038e81269fd07e358b0b051691e50ee8f20326f999a031": {
-      "address": "0x8B3e0e8F45113341146eD8E3388CEA61E808EDD5",
-      "txHash": "0xe8234cf9f6a4c8a879d191e068e85d6fb445352094ce1ed5867a0f5e51bad478",
+    "b0dfdf62ca262cde076a41a9ec1d7b13e12823b622755d2037166f0baa0f712d": {
+      "address": "0xfE3E73179bc5BA6938163520ee67e7F62CFA946C",
+      "txHash": "0x3cb245bb1ed2d7835bd856ebc32ad5d49955be5b029d5bdb38ea76a38a1e3457",
       "layout": {
         "storage": [
           {
@@ -81,7 +71,7 @@
             "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
           },
           {
-            "label": "stakingEndTimestamp",
+            "label": "stakingPeriod",
             "offset": 0,
             "slot": "201",
             "type": "t_uint256",
@@ -94,15 +84,15 @@
             "slot": "202",
             "type": "t_uint256",
             "contract": "Staking",
-            "src": "contracts/Staking.sol:24"
+            "src": "contracts/Staking.sol:23"
           },
           {
-            "label": "stakeHoldersList",
+            "label": "userList",
             "offset": 0,
             "slot": "203",
             "type": "t_struct(AddressSet)1940_storage",
             "contract": "Staking",
-            "src": "contracts/Staking.sol:26"
+            "src": "contracts/Staking.sol:25"
           },
           {
             "label": "perkToken",
@@ -110,7 +100,7 @@
             "slot": "205",
             "type": "t_contract(IERC20Upgradeable)931",
             "contract": "Staking",
-            "src": "contracts/Staking.sol:28"
+            "src": "contracts/Staking.sol:27"
           },
           {
             "label": "myToken",
@@ -118,7 +108,7 @@
             "slot": "206",
             "type": "t_contract(IERC20Upgradeable)931",
             "contract": "Staking",
-            "src": "contracts/Staking.sol:30"
+            "src": "contracts/Staking.sol:29"
           },
           {
             "label": "chainlinkAggregatorAddress",
@@ -126,7 +116,7 @@
             "slot": "207",
             "type": "t_contract(AggregatorV3Interface)45",
             "contract": "Staking",
-            "src": "contracts/Staking.sol:32"
+            "src": "contracts/Staking.sol:31"
           },
           {
             "label": "userInfo",
@@ -134,23 +124,23 @@
             "slot": "208",
             "type": "t_mapping(t_address,t_struct(UserInfo)2313_storage)",
             "contract": "Staking",
-            "src": "contracts/Staking.sol:41"
+            "src": "contracts/Staking.sol:40"
           },
           {
-            "label": "rewardRates",
+            "label": "AprRate",
             "offset": 0,
             "slot": "209",
             "type": "t_mapping(t_uint256,t_uint256)",
             "contract": "Staking",
-            "src": "contracts/Staking.sol:43"
+            "src": "contracts/Staking.sol:42"
           },
           {
-            "label": "bonusRewardRates",
+            "label": "bonusAprRate",
             "offset": 0,
             "slot": "210",
             "type": "t_mapping(t_uint256,t_uint256)",
             "contract": "Staking",
-            "src": "contracts/Staking.sol:45"
+            "src": "contracts/Staking.sol:44"
           }
         ],
         "types": {
@@ -238,19 +228,19 @@
                 "slot": "0"
               },
               {
-                "label": "depositDuration",
+                "label": "stakingDuration",
                 "type": "t_uint256",
                 "offset": 0,
                 "slot": "1"
               },
               {
-                "label": "rewardEarned",
+                "label": "bonusTokens",
                 "type": "t_uint256",
                 "offset": 0,
                 "slot": "2"
               },
               {
-                "label": "lastRewardWithdrawl",
+                "label": "bonusUnstake",
                 "type": "t_uint256",
                 "offset": 0,
                 "slot": "3"
