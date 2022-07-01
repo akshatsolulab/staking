@@ -57,8 +57,6 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         stakingPeriod = _stakingPeriod;
         __Ownable_init();
         __UUPSUpgradeable_init();
-         myTokenApr();
-        PerkTokenApr();
     }
 
 // To authorize the owner to upgrade the contract 
@@ -100,17 +98,6 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         if(userList.contains(msg.sender)) {
             userList.remove(msg.sender);
         }
-    }
-    function myTokenApr() internal {
-        AprRate[0] = 500;
-        AprRate[1] = 1000;
-        AprRate[2] = 1500;
-    }
-
-    function PerkTokenApr() internal {
-        bonusAprRate[0] = 200;
-        bonusAprRate[1] = 500;
-        bonusAprRate[2] = 1000;
     }
 
     //withdraw reward tokens earned and for updating user profile
@@ -155,25 +142,25 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         uint stakedAmountInUSD = stakedAmountByUser.mul(uint256(ConvertIntoCurrency())).div(1e8);
 
         uint _rewardRate;
-
+        //calculating the reward ratio as per the APR and amount invested and the time of investment
        if(block.timestamp <= user.stakingDuration.add(30 minutes)) {
-            _rewardRate = AprRate[0];
+            _rewardRate = 200;
         }
         else if(block.timestamp > user.stakingDuration.add(30 minutes) && block.timestamp <= user.stakingDuration.add(180 minutes)) {
-            _rewardRate = AprRate[1];
+            _rewardRate = 500;
         }
         else {
-            _rewardRate = AprRate[2];
+            _rewardRate =1000;
         }
 
         if(stakedAmountInUSD >= 100) {
-            _rewardRate = _rewardRate.add(bonusAprRate[0]);
+            _rewardRate = _rewardRate.add(500);
         }        
         else if(stakedAmountInUSD >= 500) {
-            _rewardRate = _rewardRate.add(bonusAprRate[1]);
+            _rewardRate = _rewardRate.add(1000);
         }
         else if(stakedAmountInUSD >= 1000) {
-            _rewardRate = _rewardRate.add(bonusAprRate[2]);
+            _rewardRate = _rewardRate.add(1500);
         }
 
         uint totalPendingReward = stakedAmountByUser.mul(_rewardRate).mul(stakedTimeDifference).div(stakingPeriod).div(1e4);
