@@ -78,9 +78,17 @@ Deploying the Contract on a proxy address
 
 ### Transaction Hashes
 Contract is deployed on 0xc12dc9161bC03A67BF7cB6f52D928EfA2daDfb08
+PerkToken is deployed on 0x0768e5267195a8887abc316d7f3d4825e0813434
+https://rinkeby.etherscan.io/token/0x0768e5267195a8887abc316d7f3d4825e0813434
+
+MyToken is deployed on 0x282c99a5be0d01c953a7b85becc48a580153e0c1
+https://rinkeby.etherscan.io/token/0x282c99a5be0d01c953a7b85becc48a580153e0c1
  
- The Tranasction of the rinkeby etherscan
- https://rinkeby.etherscan.io/tx/0xe1ca579ac9f705f5f281ae138d5188165ea341bd6504ca21b91e1f9091abea66
+ Staking Contract is deployed on: 0xfb4ea8ec4b0cda9eccd94c96c2ecf753e036f5234d94a9939053cff6324f9da4
+ https://rinkeby.etherscan.io/tx/0xfb4ea8ec4b0cda9eccd94c96c2ecf753e036f5234d94a9939053cff6324f9da4
+
+ PriceAggregator is deployed on:0x19874a53b95218f55f88d4d7eb1b6ba24ac6442a85b2388fb87063a5661ee591
+ https://rinkeby.etherscan.io/tx/0x19874a53b95218f55f88d4d7eb1b6ba24ac6442a85b2388fb87063a5661ee591
 
 ### Added plugins
 
