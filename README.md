@@ -88,7 +88,9 @@ Deploying the Contract on a proxy address
 
  PriceAggregator is deployed on: 0x4335162bF28136838B2d16C55e93Ca92E1cc3c87
  https://rinkeby.etherscan.io/address/0x4335162bf28136838b2d16c55e93ca92e1cc3c87
- Functionality:
+ 
+ 
+ ### Functionality:
 
  Approving Mytoken To Staking Contract:
  https://rinkeby.etherscan.io/tx/0x56888368b0b98d75e28157cc58fde06a5db58786a8023814a70c4994222bcc23
