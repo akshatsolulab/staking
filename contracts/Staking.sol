@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.0;
-
+/// @title Staking
 //all the imports for upgradeable contract
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -14,37 +14,50 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
-//using libraries for the different data types
+/// @dev using libraries for the different data types
     using SafeMath for uint256;
     using EnumerableSet for EnumerableSet.AddressSet;
-    //defining the end of the staking period
+    /// @dev defining the end of the staking period
     uint public stakingPeriod;
-    // Total amount of tokens in stkaing contract
+
+    /// @dev Total amount of tokens in stkaing contract
     uint public totalStakedInPool;
-    //defining the total staked in the staking pool
+
+    /// @dev defining the total staked in the staking pool
     EnumerableSet.AddressSet private userList;
-    /// defining upgradeable Perks Contract
+
+    /// @dev defining upgradeable Perks Contract
     IERC20Upgradeable public perkToken;
-    //defining upgradeable MyToken contract
+
+    /// @dev defining upgradeable MyToken contract
     IERC20Upgradeable public myToken;
-    //defining the chainlink aggregator
+
+    /// @dev defining the chainlink aggregator
     AggregatorV3Interface public chainlinkAggregatorAddress; // 0x2bA49Aaa16E6afD2a993473cfB70Fa8559B523cF - rinkeby
-    //Storing the UserInfo and it's attributes
+    
+    /**
+        @dev amountStaked: total amount staked by user
+        @dev stakingDuration: earliest unix timestamp of user's stake
+        @dev bonusTokens: total reward token's earned by user 
+        @dev bonusUnstake: earliest unix timestamp of user's reward withdrawl
+    */
     struct UserInfo {
         uint amountStaked;
         uint stakingDuration;
         uint bonusTokens;
         uint bonusUnstake;
     }
-    // storage of user information struct
+    /// @dev accesing the userinfo struct
     mapping(address => UserInfo) public userInfo;
-    // storage of user information struct
-    mapping(uint => uint) public AprRate;
-    // storage of user information struct
-    mapping(uint => uint) public bonusAprRate;
 
 
-    //initialising the contract and it's functiom
+    /**
+    /// @dev initialising the contract and it's function
+    /// @param perkCont: Perk Contract address
+    /// @param myTokenCont: MY Token Contract Address
+    /// @param _chainlinkAggregatorAddress: chainlink aggregator address
+    /// @param _stakingPeriod: timestamp of staking duration
+    */ 
     function initialize (
         IERC20Upgradeable perkCont,
         IERC20Upgradeable myTokenCont,
@@ -59,10 +72,11 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         __UUPSUpgradeable_init();
     }
 
-// To authorize the owner to upgrade the contract 
+/// @notice To authorize the owner to upgrade the contract 
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
-   //depositing myTokens in the pool.
+   /// @notice depositing myTokens in the pool.
+   /// @param _amount: the amount which have to be staked.
     function depositInPool (uint _amount) external {
         UserInfo storage user = userInfo[msg.sender];
         require(_amount > 0, "depositStableCoin:: amount should be greater than zero");
@@ -82,7 +96,8 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         }
     }
 
-   //unstaking the myToken along with rewards
+   /// @notice unstaking the myToken along with rewards
+   /// @param _amount: amount to withdraw from the pool
     function unstake(uint _amount) external {
         UserInfo storage user = userInfo[msg.sender];
         require(_amount <= user.amountStaked, "unstake:: can not withdraw more than your staked amount");
@@ -100,18 +115,26 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         }
     }
 
-    //withdraw reward tokens earned and for updating user profile
+    /// @notice withdraw reward tokens earned and for updating user profile
     function claimMyToken() external {
         updateUser();
     }
 
-    //fetch total rewards earned by user and address of whom you want to check rewards for
+    /**
+     @notice fetch total rewards earned by user and address of whom you want to check rewards for.
+     @param _userAddress: user's address to check balance.
+     @return uint: pending rewards for @param
+    */
     function remainingRewardAmount(address _userAddress) external view returns(uint) {
         uint pendingAmount = remainingReward(_userAddress);
         return pendingAmount; 
     }
 
-    //update user information and transfer pending reward tokens
+    /**
+        @notice update user information and transfer pending reward tokens (msg.sender)
+        @dev internal function
+        @dev smartcontract must have enough reward token balance
+    */
     function updateUser() internal {
         UserInfo storage user = userInfo[msg.sender];
         uint pendingReward = remainingReward(msg.sender);
@@ -121,12 +144,20 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         }
         user.bonusUnstake = block.timestamp;
     }
-    // fetch current price of stable-PerkToken/USD and convert mytokens into usd price
+     /**
+        @notice fetch current price of PerkToken/USD and convert mytokens into usd price
+        @dev internal function
+        @return uint: current USD equivalent price of MyToken coin
+    */
     function ConvertIntoCurrency() internal view returns(int) {
         (, int currentUSDPrice, , ,) = chainlinkAggregatorAddress.latestRoundData();
         return currentUSDPrice;
     }
-    //get pending rewards generated by user and to know the pending amount
+     /**
+        @notice get pending rewards generated by user and to know the pending amount
+        @dev internal function
+        @param _userAddress: user's address of whom you want to check rewards for
+    */
     function remainingReward(address _userAddress) internal view returns(uint) {
         UserInfo storage user = userInfo[msg.sender];
         if(!userList.contains(_userAddress)) {
