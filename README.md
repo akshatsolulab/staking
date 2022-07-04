@@ -77,31 +77,40 @@ Deploying the Contract on a proxy address
 
 
 ### Transaction Hashes
-PerkToken is deployed on 0x0768e5267195a8887abc316d7f3d4825e0813434
-https://rinkeby.etherscan.io/token/0x0768e5267195a8887abc316d7f3d4825e0813434
+ PerkToken is deployed on 0x005D243C654De3A2D4422A62347C46766086159F
+ https://rinkeby.etherscan.io/address/0x005d243c654de3a2d4422a62347c46766086159f
 
-MyToken is deployed on 0x282c99a5be0d01c953a7b85becc48a580153e0c1
-https://rinkeby.etherscan.io/token/0x282c99a5be0d01c953a7b85becc48a580153e0c1
- 
- Staking Contract is deployed on: 0xfb4ea8ec4b0cda9eccd94c96c2ecf753e036f5234d94a9939053cff6324f9da4
- https://rinkeby.etherscan.io/tx/0xfb4ea8ec4b0cda9eccd94c96c2ecf753e036f5234d94a9939053cff6324f9da4
+ MyToken is deployed on 0x5c8708d0fe5B3e77226c71323AaB09d3E4FB575A
+ https://rinkeby.etherscan.io/address/0x5c8708d0fe5B3e77226c71323AaB09d3E4FB575A
 
- PriceAggregator is deployed on:0x19874a53b95218f55f88d4d7eb1b6ba24ac6442a85b2388fb87063a5661ee591
- https://rinkeby.etherscan.io/tx/0x19874a53b95218f55f88d4d7eb1b6ba24ac6442a85b2388fb87063a5661ee591
+ Staking Contract is deployed on: 0x26362cBc969fde804b7f546731e0546B5FfF4D52
+ https://rinkeby.etherscan.io/address/0x26362cbc969fde804b7f546731e0546b5fff4d52
 
+ PriceAggregator is deployed on: 0x4335162bF28136838B2d16C55e93Ca92E1cc3c87
+ https://rinkeby.etherscan.io/address/0x4335162bf28136838b2d16c55e93ca92e1cc3c87
  Functionality:
 
+ Approving Mytoken To Staking Contract:
+ https://rinkeby.etherscan.io/tx/0x56888368b0b98d75e28157cc58fde06a5db58786a8023814a70c4994222bcc23
+
  Initializing The Smart Contract:
- https://rinkeby.etherscan.io/tx/0x1c39243fb909e9df245b26b8a190c145a43df4b5fc7037f62dbb96982eaa0d2b
+ https://rinkeby.etherscan.io/tx/0xe231d3fb435d23cf6a2975fd2f96c8f88bb7dd56738e6e86b83ab0464fb6fd5b
 
  Claiming MyToken:
- https://rinkeby.etherscan.io/tx/0x8e3564e35714c8c84769d2234f55878817838db50956cf3ef4ab774c14fc5329
+ https://rinkeby.etherscan.io/tx/0x7620350e794b364e65e18d96fe3f754878c5b5c20d6246e53b6c07f02ffbd1bd
 
  Transfering perk tokens to staking:
  https://rinkeby.etherscan.io/tx/0xe6762320ca6321a6869e273574fec382b808f8a437b4e7e71ce34f57fbbb9442
 
  Transfering MyTokens to staking:
  https://rinkeby.etherscan.io/tx/0x8e3564e35714c8c84769d2234f55878817838db50956cf3ef4ab774c14fc5329
+
+Depositing MyTokens to staking:
+https://rinkeby.etherscan.io/tx/0xa4527b21fae0bad52263e3a37f676f07ea7c56a829f1530091d03717304937c9
+
+Unstaking Mytokens with rewards to from staking:
+https://rinkeby.etherscan.io/tx/0xb1b790fb726b41cbafff4b2ddaaf8f361daa063d270ff37baea663efa9ee1c55
+
 
 
 ### Added plugins
