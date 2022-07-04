@@ -15,7 +15,7 @@ contract PriceAggregator {
                 /*uint timeStamp*/,
                 /*uint80 answeredInRound*/
             ) = AggregatorV3Interface(addr).latestRoundData();
-            return price;
+            return price/1e8;
         }
 
         function decimals(address addr) external view returns (uint8) {

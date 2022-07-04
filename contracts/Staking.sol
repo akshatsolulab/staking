@@ -33,7 +33,7 @@ contract Staking is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     IERC20Upgradeable public myToken;
 
     /// @dev defining the chainlink aggregator
-    AggregatorV3Interface public chainlinkAggregatorAddress; // 0x2bA49Aaa16E6afD2a993473cfB70Fa8559B523cF - rinkeby
+    AggregatorV3Interface public chainlinkAggregatorAddress;
     
     /**
         @dev amountStaked: total amount staked by user

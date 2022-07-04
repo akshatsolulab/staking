@@ -90,10 +90,19 @@ https://rinkeby.etherscan.io/token/0x282c99a5be0d01c953a7b85becc48a580153e0c1
  https://rinkeby.etherscan.io/tx/0x19874a53b95218f55f88d4d7eb1b6ba24ac6442a85b2388fb87063a5661ee591
 
  Functionality:
+
  Initializing The Smart Contract:
  https://rinkeby.etherscan.io/tx/0x1c39243fb909e9df245b26b8a190c145a43df4b5fc7037f62dbb96982eaa0d2b
 
- 
+ Claiming MyToken:
+ https://rinkeby.etherscan.io/tx/0x8e3564e35714c8c84769d2234f55878817838db50956cf3ef4ab774c14fc5329
+
+ Transfering perk tokens to staking:
+ https://rinkeby.etherscan.io/tx/0xe6762320ca6321a6869e273574fec382b808f8a437b4e7e71ce34f57fbbb9442
+
+ Transfering MyTokens to staking:
+ https://rinkeby.etherscan.io/tx/0x8e3564e35714c8c84769d2234f55878817838db50956cf3ef4ab774c14fc5329
+
 
 ### Added plugins
 
