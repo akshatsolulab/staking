@@ -89,6 +89,12 @@ https://rinkeby.etherscan.io/token/0x282c99a5be0d01c953a7b85becc48a580153e0c1
  PriceAggregator is deployed on:0x19874a53b95218f55f88d4d7eb1b6ba24ac6442a85b2388fb87063a5661ee591
  https://rinkeby.etherscan.io/tx/0x19874a53b95218f55f88d4d7eb1b6ba24ac6442a85b2388fb87063a5661ee591
 
+ Functionality:
+ Initializing The Smart Contract:
+ https://rinkeby.etherscan.io/tx/0x1c39243fb909e9df245b26b8a190c145a43df4b5fc7037f62dbb96982eaa0d2b
+
+ 
+
 ### Added plugins
 
 - Gas reporter [hardhat-gas-reporter](https://hardhat.org/plugins/hardhat-gas-reporter.html)
